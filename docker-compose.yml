@@ -1,4 +1,5 @@
-version: "3.9"
+version: "3"
+
 services:
   web:
     build: .
@@ -7,13 +8,13 @@ services:
       - .env
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/www
+      - ./InnoCPC/db.sqlite3:/InnoCPC/db.sqlite3
     ports:
-      - "8000:8000"
+      - "80:8000"
     depends_on:
       - db
   db:
-    image: "library/postgres:13.2-alpine"
+    image: postgres
     restart: unless-stopped
     env_file:
       - .env

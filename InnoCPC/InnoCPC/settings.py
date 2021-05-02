@@ -1,4 +1,4 @@
-from pathlib import Path, PurePath
+from pathlib import Path
 from dotenv import load_dotenv
 import os
 
@@ -13,18 +13,19 @@ SECRET_KEY = os.getenv("SECRET_KEY") or '21370df40d0492d4a69972383d8abf200350e35
 DEBUG = os.getenv("MODE") == 'DEBUG'
 ALLOWED_HOSTS = ['*']
 
-# AUTH_USER_MODEL = 'api.User'
+AUTH_USER_MODEL = 'api.User'
 
 # Application definition
+
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'api',
+    'django.contrib.admin',
 ]
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

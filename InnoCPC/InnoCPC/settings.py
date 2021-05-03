@@ -13,6 +13,8 @@ SECRET_KEY = os.getenv("SECRET_KEY") or '21370df40d0492d4a69972383d8abf200350e35
 DEBUG = os.getenv("MODE") == 'DEBUG'
 ALLOWED_HOSTS = ['*']
 
+BOTNAME = os.getenv("BOTNAME")
+
 AUTH_USER_MODEL = 'api.User'
 
 # Application definition

@@ -13,12 +13,16 @@ SECRET_KEY = os.getenv("SECRET_KEY") or '21370df40d0492d4a69972383d8abf200350e35
 DEBUG = os.getenv("MODE") == 'DEBUG'
 ALLOWED_HOSTS = ['*']
 
+
+# Custom global variables
 BOTNAME = os.getenv("BOTNAME")
+TOKEN_EXPIRES = 1  # in days
+
 
 AUTH_USER_MODEL = 'api.User'
 
-# Application definition
 
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',

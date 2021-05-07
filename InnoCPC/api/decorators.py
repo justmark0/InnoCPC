@@ -1,5 +1,5 @@
 from django.conf import settings
-from .models import User
+from .crud import get_user
 from .response import *
 import jwt
 
@@ -14,7 +14,7 @@ def is_authorized(view):
         user_data = jwt.decode(request.POST['token'], settings.SECRET_KEY, algorithm='HS256')
         if 'username' not in user_data.keys():
             return invalid_request_params()
-        user = User.objects.filter(username=user_data['username']).first()
+        user = get_user(request.POST['username'])
         if not user:
             return unauthorized_request()
         return view(request, user)

@@ -11,11 +11,11 @@ class UserManager(BaseUserManager):
     https://docs.djangoproject.com/en/3.2/topics/auth/customizing/#writing-a-manager-for-a-custom-user-model
     """
 
-    def create_user(self, username, password=None):
+    def create_user(self, username, password=None, user_id=None):
         if username is None:
             raise TypeError('Users must have a username.')
 
-        user = self.model(username=username)
+        user = self.model(username=username, user_id=user_id)
         user.set_password(password)
         user.save()
 
@@ -32,7 +32,7 @@ class UserManager(BaseUserManager):
         return user
 
 
-class User(AbstractUser, PermissionsMixin):
+class User(AbstractUser):
     user_id = models.BigIntegerField(db_index=True)  # user_id from Telegram
     username = models.CharField(db_index=True, max_length=50, unique=True)
     cf_username = models.CharField(db_index=True, max_length=50, null=True)     # We store usernames to count points
@@ -43,8 +43,6 @@ class User(AbstractUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['username']
     objects = UserManager()
 
     @property

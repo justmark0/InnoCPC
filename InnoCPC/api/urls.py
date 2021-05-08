@@ -3,5 +3,5 @@ from .views import *
 
 urlpatterns = [
     path('login', login_view),  # move to backend
-    path('get_token', get_token_view),
+    path('get_token', telegram_callback_login_view),
 ]

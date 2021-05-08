@@ -13,7 +13,7 @@ def is_authorized(view):
         # Check that the request is authorized
         user_data = jwt.decode(request.POST['token'], settings.SECRET_KEY, algorithm='HS256')
         if 'username' not in user_data.keys():
-            return invalid_request_params()
+            return unauthorized_request()
         user = get_user(request.POST['username'])
         if not user:
             return unauthorized_request()

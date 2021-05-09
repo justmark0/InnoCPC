@@ -3,6 +3,8 @@
 import os
 import sys
 
+SILENCED_SYSTEM_CHECKS = ['auth.E003', 'auth.W004']
+
 
 def main():
     """Run administrative tasks."""

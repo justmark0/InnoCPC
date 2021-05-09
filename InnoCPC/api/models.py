@@ -1,4 +1,4 @@
-from django.contrib.auth.models import PermissionsMixin, AbstractUser, BaseUserManager
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from datetime import datetime, timedelta
 from django.conf import settings
 from django.db import models
@@ -11,12 +11,10 @@ class UserManager(BaseUserManager):
     https://docs.djangoproject.com/en/3.2/topics/auth/customizing/#writing-a-manager-for-a-custom-user-model
     """
 
-    def create_user(self, username, password=None, user_id=None):
+    def create_user(self, username, user_id):
         if username is None:
-            raise TypeError('Users must have a username.')
-
-        user = self.model(username=username, user_id=user_id)
-        user.set_password(password)
+            username = f'None_{user_id}'
+        user = User(username=username, user_id=user_id)
         user.save()
 
         return user
@@ -34,7 +32,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
     user_id = models.BigIntegerField(db_index=True)  # user_id from Telegram
-    username = models.CharField(db_index=True, max_length=50, unique=True)
+    username = models.CharField(db_index=True, max_length=50, unique=True)  # null=True
     cf_username = models.CharField(db_index=True, max_length=50, null=True)     # We store usernames to count points
     timus_username = models.CharField(db_index=True, max_length=50, null=True)  # On each platform
     cf_points = models.IntegerField(default=0)
@@ -57,7 +55,7 @@ class User(AbstractUser):
             'exp': int(dt.strftime('%s'))
         }, settings.SECRET_KEY, algorithm='HS256')
 
-        return token.decode('utf-8')
+        return token
 
 
 class Team(models.Model):

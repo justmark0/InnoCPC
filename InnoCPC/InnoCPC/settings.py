@@ -16,6 +16,7 @@ ALLOWED_HOSTS = ['*']
 
 # Custom global variables
 BOTNAME = os.getenv("BOTNAME")
+BOTTOKEN = os.getenv("BOTTOKEN")
 TOKEN_EXPIRES = 1  # in days
 
 

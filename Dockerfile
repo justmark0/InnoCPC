@@ -2,10 +2,14 @@ FROM python:3.9
 
 ENV PYTHONUNBUFFERED 1
 
-COPY ./requirements.txt /requirements.txt
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
-RUN mkdir /InnoCPC
+EXPOSE 8000
+WORKDIR /src
 
-WORKDIR /InnoCPC
-COPY InnoCPC /InnoCPC
+COPY poetry.lock pyproject.toml ./
+RUN pip install poetry==1.1 && \
+    poetry config virtualenvs.in-project true && \
+    poetry install --no-dev
+
+COPY src ./
+
+CMD poetry run python main.py

@@ -1,6 +1,18 @@
 version: '3'
 
 services:
+  python:
+    build: .
+    restart: on-failure
+    ports:
+      - "8000:8000"
+    environment:
+      DB_CONNECTION: "postgres://postgres:postgres@db/postgres"
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+
   postgres:
     image: postgres:11.1-alpine
     ports:

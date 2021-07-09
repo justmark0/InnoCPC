@@ -2,14 +2,18 @@ import uvicorn
 from fastapi import FastAPI
 
 from core.routes import router
-from core.settings import DEBUG
+from core.settings import DB_SETTINGS, DEBUG
+from models import db
 
 
 def get_application() -> FastAPI:
-    app = FastAPI(debug=DEBUG)
+    application = FastAPI(debug=DEBUG)
 
-    app.include_router(router)
-    return app
+    db.bind(**DB_SETTINGS)
+    db.generate_mapping(create_tables=True)
+
+    application.include_router(router)
+    return application
 
 
 app = get_application()

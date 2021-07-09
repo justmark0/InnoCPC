@@ -6,21 +6,19 @@ services:
     restart: on-failure
     ports:
       - "8000:8000"
-    environment:
-      DB_CONNECTION: "postgres://postgres:postgres@db/postgres"
     env_file:
       - .env
     depends_on:
-      - postgres
+      - db
 
-  postgres:
-    image: postgres:11.1-alpine
+  db:
+    image: postgres:13-alpine
     ports:
       - 5432:5432
     environment:
-      POSTGRES_DB: InnoCPC
-      POSTGRES_USER: InnoCPC
-      POSTGRES_PASSWORD: InnoCPC
+      POSTGRES_DB: ${POSTGRES_DB:-InnoCPC}
+      POSTGRES_USER: ${POSTGRES_USER:-InnoCPC}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-InnoCPC}
     volumes:
       - "InnoCPC:/var/lib/postgresql/data/"
 
